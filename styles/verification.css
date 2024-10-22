@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    color: #333;
+    color: #111;
     line-height: 1.6;
     scroll-behavior: smooth;
 }
@@ -15,7 +15,7 @@ body {
 header {
     text-align: center;
     padding: 2rem;
-    background-color: #333;
+    background-color: #111;
     color: white;
 }
 
@@ -133,7 +133,7 @@ a:hover {
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: #333;
+    background-color: #111;
     color: white;
 }
 

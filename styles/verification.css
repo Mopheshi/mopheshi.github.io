@@ -110,7 +110,7 @@ a:hover {
 .user-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
 }
 
 .user-info h3 {

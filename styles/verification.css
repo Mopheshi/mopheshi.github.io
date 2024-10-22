@@ -93,11 +93,11 @@ a:hover {
 }
 
 .profile-picture {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 1.5rem;
+    margin-right: 1rem;
     border: 2px solid #6a00aa;
 }
 

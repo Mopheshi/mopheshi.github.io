@@ -54,12 +54,16 @@ a:hover {
 .theme-toggle {
     background: none;
     border: none;
-    color: var(--text-primary);
+    color: white;
     cursor: pointer;
     padding: 0.5rem;
     font-size: 1.2rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
     margin-left: 1rem;
+}
+
+:root[data-theme="light"] .theme-toggle {
+    color: #6a00aa;
 }
 
 .theme-toggle:hover {
@@ -288,11 +292,12 @@ nav ul li {
 
 .stats h3 {
     font-size: 3rem;
-    color: #6a00aa;
+    color: white;
 }
 
 .stats p {
     font-size: 1.2rem;
+    color: white;
 }
 
 /* Experience Section */

@@ -1,16 +1,5 @@
 /* Theme Variables */
 :root {
-    /* Light theme variables */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f4f4f4;
-    --text-primary: #111;
-    --text-secondary: #270040;
-    --accent-color: #6a00aa;
-    --header-bg: #606060;  /* Keep header dark */
-    --card-bg: #f4f4f4;
-}
-
-:root[data-theme="dark"] {
     /* Dark theme variables */
     --bg-primary: #1a1a1a;
     --bg-secondary: #111111;
@@ -19,6 +8,17 @@
     --accent-color: #6a00aa;
     --header-bg: #111111;
     --card-bg: #1a1a1a;
+}
+
+:root[data-theme="light"] {
+    /* Light theme variables */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f4f4f4;
+    --text-primary: #111;
+    --text-secondary: #270040;
+    --accent-color: #6a00aa;
+    --header-bg: #606060;
+    --card-bg: #f4f4f4;
 }
 
 /* General Styles */

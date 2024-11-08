@@ -3,10 +3,10 @@
     /* Light theme variables */
     --bg-primary: #ffffff;
     --bg-secondary: #f4f4f4;
-    --text-primary: #111111;
-    --text-secondary: #270040;
+    --text-primary: #270040;
+    --text-secondary: #6a00aa;
     --accent-color: #6a00aa;
-    --header-bg: #ffffff;
+    --header-bg: #111;  /* Keep header dark */
     --card-bg: #f4f4f4;
 }
 

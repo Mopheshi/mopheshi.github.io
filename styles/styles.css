@@ -3,10 +3,10 @@
     /* Light theme variables */
     --bg-primary: #ffffff;
     --bg-secondary: #f4f4f4;
-    --text-primary: #270040;
-    --text-secondary: #6a00aa;
+    --text-primary: #111;
+    --text-secondary: #270040;
     --accent-color: #6a00aa;
-    --header-bg: #111;  /* Keep header dark */
+    --header-bg: #606060;  /* Keep header dark */
     --card-bg: #f4f4f4;
 }
 
@@ -15,7 +15,7 @@
     --bg-primary: #1a1a1a;
     --bg-secondary: #111111;
     --text-primary: #ffffff;
-    --text-secondary: #6a00aa;
+    --text-secondary: #ffffff;
     --accent-color: #6a00aa;
     --header-bg: #111111;
     --card-bg: #1a1a1a;

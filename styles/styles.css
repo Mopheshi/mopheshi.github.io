@@ -1,46 +1,18 @@
-/* Theme Variables */
-:root {
-    --bg-primary: #1a1a1a;
-    --bg-secondary: #111111;
-    --text-primary: #ffffff;
-    --text-secondary: #ffffff;
-    --accent-color: #6a00aa;
-    --header-bg: #111111;
-    --card-bg: #1a1a1a;
-}
-
-:root[data-theme="light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f4f4f4;
-    --text-primary: #111;
-    --text-secondary: #270040;
-    --accent-color: #6a00aa;
-    --header-bg: #606060;
-    --card-bg: #f4f4f4;
-}
-
 /* General Styles */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #1a1a1a;
+    color: white;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: var(--text-primary);
+    color: white;
 }
 
 a {
-    color: var(--text-primary);
-    text-decoration: none;
-}
-
-/* Ensure header text stays white */
-header h1, header h2, header h3, header h4, header h5, header h6,
-header a, header p {
     color: white;
+    text-decoration: none;
 }
 
 /* Focus States for Links and Buttons */
@@ -54,34 +26,13 @@ a:hover {
     color: #6a00aa;
 }
 
-/* Theme Toggle Button */
-.theme-toggle {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    transition: transform 0.3s ease, color 0.3s ease;
-    margin-left: 1rem;
-}
-
-:root[data-theme="light"] .theme-toggle {
-    color: #6a00aa;
-}
-
-.theme-toggle:hover {
-    transform: rotate(45deg);
-}
-
 /* Header */
 header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 20px 50px;
-    background-color: var(--header-bg);
-    transition: background-color 0.3s ease;
+    background-color: #111;
 }
 
 .name {
@@ -283,12 +234,6 @@ nav ul li {
     margin-bottom: 20px;
 }
 
-.about-me p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: var(--text-primary);
-}
-
 .stats {
     display: flex;
     justify-content: center;
@@ -302,12 +247,11 @@ nav ul li {
 
 .stats h3 {
     font-size: 3rem;
-    color: white;
+    color: #6a00aa;
 }
 
 .stats p {
     font-size: 1.2rem;
-    color: white;
 }
 
 /* Experience Section */

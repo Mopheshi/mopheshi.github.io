@@ -1,9 +1,33 @@
+/* Theme Variables */
+:root {
+    /* Light theme variables */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f4f4f4;
+    --text-primary: #111111;
+    --text-secondary: #270040;
+    --accent-color: #6a00aa;
+    --header-bg: #ffffff;
+    --card-bg: #f4f4f4;
+}
+
+:root[data-theme="dark"] {
+    /* Dark theme variables */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #111111;
+    --text-primary: #ffffff;
+    --text-secondary: #6a00aa;
+    --accent-color: #6a00aa;
+    --header-bg: #111111;
+    --card-bg: #1a1a1a;
+}
+
 /* General Styles */
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #1a1a1a;
-    color: white;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -26,13 +50,30 @@ a:hover {
     color: #6a00aa;
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    margin-left: 1rem;
+}
+
+.theme-toggle:hover {
+    transform: rotate(45deg);
+}
+
 /* Header */
 header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 20px 50px;
-    background-color: #111;
+    background-color: var(--header-bg);
+    transition: background-color 0.3s ease;
 }
 
 .name {

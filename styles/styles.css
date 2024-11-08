@@ -1,6 +1,5 @@
 /* Theme Variables */
 :root {
-    /* Dark theme variables */
     --bg-primary: #1a1a1a;
     --bg-secondary: #111111;
     --text-primary: #ffffff;
@@ -11,7 +10,6 @@
 }
 
 :root[data-theme="light"] {
-    /* Light theme variables */
     --bg-primary: #ffffff;
     --bg-secondary: #f4f4f4;
     --text-primary: #111;

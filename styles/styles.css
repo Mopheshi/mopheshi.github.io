@@ -458,6 +458,33 @@ nav ul li {
     color: white;
 }
 
+.awards-item, .interests-item {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s, background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.awards-item:hover, .interests-item:hover {
+    transform: translateY(-10px);
+    background-color: #270040;
+}
+
+.awards-item ul, .interests-item p {
+    font-size: 1rem;
+    color: white;
+}
+
+.awards-item ul {
+    list-style: none;
+    padding: 0;
+}
+
+.awards-item ul li {
+    margin-bottom: 10px;
+}
+
 .skills-item ul, .experience-item ul {
     list-style: none;
     padding: 0;

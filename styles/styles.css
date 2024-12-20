@@ -33,6 +33,9 @@ header {
     align-items: center;
     padding: 20px 50px;
     background-color: #111;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .name {

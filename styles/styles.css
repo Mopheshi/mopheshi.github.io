@@ -507,14 +507,27 @@ nav ul li {
     color: #6a00aa;
 }
 
-.languages ul {
-    list-style: none;
-    padding: 0;
+.languages-item {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s, background-color 0.3s;
+    margin-bottom: 20px;
 }
 
-.languages ul li {
+.languages-item:hover {
+    transform: translateY(-10px);
+    background-color: #270040;
+}
+
+.languages-item ul {
+    list-style: none;
+    padding: 0;
     font-size: 1rem;
     color: white;
+}
+
+.languages-item ul li {
     margin-bottom: 10px;
 }
 

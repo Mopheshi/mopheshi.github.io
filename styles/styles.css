@@ -353,15 +353,17 @@ nav ul li {
 }
 
 .project-screenshots {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 10px;
+    margin-top: 10px;
 }
 
 .project-screenshots img {
     width: 100%;
-    max-width: 150px;
+    height: auto;
     border-radius: 5px;
+    object-fit: cover;
 }
 
 .download-btn {

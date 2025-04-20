@@ -354,9 +354,15 @@ nav ul li {
 
 .project-screenshots {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* 4 columns for larger screens */
     gap: 10px;
     margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .project-screenshots {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for smaller screens */
+    }
 }
 
 .project-screenshots img {

@@ -392,8 +392,13 @@ nav ul li {
     font-size: 1.2rem;
 }
 
+.download-btn:hover i {
+    color: white;
+}
+
 .download-btn:hover {
     background-color: #6a00aa;
+    color: white;
     transform: translateY(-3px);
 }
 

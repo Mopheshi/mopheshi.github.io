@@ -364,6 +364,31 @@ nav ul li {
     border-radius: 5px;
 }
 
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background-color: #270040;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.download-btn i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.download-btn:hover {
+    background-color: #6a00aa;
+    transform: translateY(-3px);
+}
+
 /* Animations */
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {

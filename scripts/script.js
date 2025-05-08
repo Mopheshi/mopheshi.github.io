@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     AOS.init();
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        AOS.init({disable: true});
+    } else {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            offset: 100,
+            once: true
+        });
+    }
+
     const scrollDown = document.querySelector('.scroll-down');
     const learnMoreBtn = document.getElementById('learn-more-btn');
 

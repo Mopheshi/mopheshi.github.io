@@ -15,27 +15,29 @@ document.addEventListener('DOMContentLoaded', function () {
     learnMoreBtn.addEventListener('click', scrollToAboutMe);
 
     const counters = document.querySelectorAll('.stats h3');
-    const speed = 200;
+    const speed = 200; // No longer used, but kept for compatibility
     let hasAnimated = false;
 
     const countUp = (counter, target) => {
-        let currentCount = 0;
-        const increment = Math.ceil(target / (speed / 30));
+        const startTime = performance.now();
+        const duration = 2000;
 
-        const updateCounter = () => {
-            if (currentCount < target) {
-                currentCount += increment;
-                if (currentCount > target) {
-                    currentCount = target;
-                }
-                counter.innerText = `${currentCount}+`;
+        const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+        const updateCounter = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            if (elapsed < duration) {
+                const progress = elapsed / duration;
+                const easedProgress = easeInOutQuad(progress);
+                const currentValue = Math.floor(easedProgress * target);
+                counter.innerText = `${currentValue}+`;
                 requestAnimationFrame(updateCounter);
             } else {
                 counter.innerText = `${target}+`;
             }
         };
 
-        updateCounter();
+        requestAnimationFrame(updateCounter);
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -48,6 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
         });
+    }, {
+        threshold: 1.0 // Trigger when 100% of the element is visible
     });
 
     observer.observe(document.querySelector('.stats'));

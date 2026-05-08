@@ -23,9 +23,9 @@ Welcome! This document outlines key conventions and architectural details to hel
 - **Design Tokens**: Standard visual style involves CSS variables like `var(--p-cream)`, typically injected in inline styles or Tailwind utilities.
 
 ## ⚠️ Key Developer Workflows
-- **Development Server**: `pnpm run dev` starts the Vite environment.
-- **Build**: `pnpm run build` bundles the app.
-- **Dependency Management**: Uses `pnpm` (note: `pnpm-workspace.yaml` exists, implying potential monorepo capabilities). Always use `pnpm` for installing and running scripts.
+- **Development Server**: `npm run dev` starts the Vite environment.
+- **Build**: `npm run build` bundles the app.
+- **Dependency Management**: Uses `npm` (note: `npm-workspace.yaml` exists, implying potential monorepo capabilities). Always use `npm` for installing and running scripts.
 
 ## 🔄 Patterns
 - **SEO & Head Management**: Handled gracefully via `useSeo` hook (`src/app/components/portfolio/useSeo.ts`).

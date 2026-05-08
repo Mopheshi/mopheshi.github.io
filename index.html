@@ -40,6 +40,23 @@
 
 <body>
 <div id="root"></div>
+
+<!-- Calendly badge widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<script type="text/javascript">
+    window.addEventListener('load', function() {
+        if (window.Calendly) {
+            window.Calendly.initBadgeWidget({
+                url: 'https://calendly.com/ndachimya/book-an-appointment?background_color=fdf6b2&text_color=0a1a5e&primary_color=a8881e',
+                text: 'Book an Appointment',
+                color: '#030213',
+                textColor: '#ffffff',
+                branding: true
+            });
+        }
+    });
+</script>
+<!-- Calendly badge widget end -->
 </body>
 </html>
-  

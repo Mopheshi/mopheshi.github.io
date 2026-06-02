@@ -5,7 +5,7 @@ const SITE_URL = "https://mopheshi.github.io";
 const SITE_NAME = "Ndachimya Edward";
 const DEFAULT_TITLE = "Ndachimya Edward — AI Engineer & Founder";
 const DEFAULT_DESCRIPTION =
-  "Ndachimya Edward — AI Engineer and Founder building Vancus AI and VaultSplit. M.Sc. AI Engineering at İstanbul Okan University. Open to PhD offers and technical co-founder roles.";
+  "Ndachimya Edward — AI Engineer and Founder building Vancus AI. M.Sc. AI Engineering at İstanbul Okan University. Open to PhD offers and technical co-founder roles.";
 
 function setMeta(attr: "name" | "property", key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(

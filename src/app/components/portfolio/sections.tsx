@@ -64,6 +64,7 @@ export function CalendlyBadge() {
     }
 
     return () => {
+      window.Calendly?.destroyBadgeWidget?.();
       document.querySelector(".calendly-badge-widget")?.remove();
     };
   }, []);

@@ -8,6 +8,8 @@ import {
   // Testimonial,
   Contact,
   Footer,
+  SkipLink,
+  CalendlyBadge,
   useScrollToHash,
 } from "./components/portfolio/sections";
 import { useSeo } from "./components/portfolio/useSeo";
@@ -21,8 +23,9 @@ export default function App() {
       className="min-h-screen w-full"
       style={{ backgroundColor: "var(--p-cream)" }}
     >
+      <SkipLink />
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <Metrics />
         <About />
@@ -32,6 +35,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <CalendlyBadge />
     </div>
   );
 }

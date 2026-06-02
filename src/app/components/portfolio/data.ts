@@ -1,6 +1,6 @@
-import vancusImg from "../../../imports/vancus.png";
-import vaultsplitImg from "../../../imports/vaultsplit.png";
-import paysphereImg from "../../../imports/paysphere.png";
+import vancusImg from "../../../imports/vancus.webp";
+import vaultsplitImg from "../../../imports/vaultsplit.webp";
+import paysphereImg from "../../../imports/paysphere.webp";
 
 export type Store = "play" | "appstore" | "amazon" | "github" | "web";
 
@@ -112,9 +112,8 @@ const personaRag: Project = {
   title: "PersonaRAG",
   body: "An agentic LLM framework for behavioural user modelling and contextual recommendation, built for the DSN × BCT LLM Agent Challenge 2026. Two-task system over the Yelp Open Dataset — a review simulator that predicts star ratings and writes in-voice reviews, and a three-stage recommendation agent (intent reasoning → semantic retrieval over 150K businesses → LLM reranking). Both tasks share a Nigerian Cultural Adapter that injects authentic Nigerian English and Naija Pidgin when local signals are detected.",
   img: personaRagImg,
-  href: "https://bcthack.vancus.app/",
+  href: "https://github.com/Mopheshi/bcthack",
   stores: [
-    { kind: "web", href: "https://bcthack.vancus.app/", label: "Live demo" },
     {
       kind: "github",
       href: "https://github.com/Mopheshi/bcthack",
@@ -264,7 +263,7 @@ export const publications: Publication[] = [
     venue: ASYU,
     year: 2026,
     status: "Submitted",
-    href: "https://bcthack.vancus.app/",
+    href: "https://github.com/Mopheshi/bcthack",
   },
   {
     title:

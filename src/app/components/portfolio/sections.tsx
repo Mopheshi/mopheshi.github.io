@@ -1,7 +1,6 @@
-import { Github, Mail, Linkedin, ArrowRight } from "lucide-react";
+import { Github, Mail, Linkedin, ArrowRight, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router";
-import { useEffect } from "react";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { useEffect, useState } from "react";
 import { HoverFill } from "./HoverFill";
 import { Sparkle, Scribble, Portrait } from "./decorative";
 import {
@@ -12,21 +11,97 @@ import {
   type Publication,
 } from "./data";
 import { useInView } from "./useInView";
-import workspaceImg from "../../../imports/workspace.jpg";
+import workspaceImg from "../../../imports/workspace.webp";
 
 const navy = "var(--p-navy)";
 const gold = "var(--p-gold)";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initBadgeWidget: (opts: Record<string, unknown>) => void;
+    };
+  }
+}
+
+/**
+ * Mounts the Calendly floating badge widget. Lazily loads the CSS + JS on
+ * first mount, removes the injected badge element on unmount so it does not
+ * persist across SPA route changes.
+ */
+export function CalendlyBadge() {
+  useEffect(() => {
+    const cssId = "calendly-css";
+    const jsId = "calendly-js";
+
+    if (!document.getElementById(cssId)) {
+      const link = document.createElement("link");
+      link.id = cssId;
+      link.rel = "stylesheet";
+      link.href = "https://assets.calendly.com/assets/external/widget.css";
+      document.head.appendChild(link);
+    }
+
+    const init = () => {
+      window.Calendly?.initBadgeWidget({
+        url: "https://calendly.com/ndachimya/book-an-appointment?background_color=fdf6b2&text_color=0a1a5e&primary_color=a8881e",
+        text: "Book an Appointment",
+        color: "#030213",
+        textColor: "#ffffff",
+        branding: true,
+      });
+    };
+
+    if (window.Calendly) {
+      init();
+    } else if (!document.getElementById(jsId)) {
+      const script = document.createElement("script");
+      script.id = jsId;
+      script.src = "https://assets.calendly.com/assets/external/widget.js";
+      script.async = true;
+      script.onload = init;
+      document.body.appendChild(script);
+    }
+
+    return () => {
+      document.querySelector(".calendly-badge-widget")?.remove();
+    };
+  }, []);
+
+  return null;
+}
+
+/**
+ * Skip-to-content link for keyboard users. Visually hidden until focused,
+ * then appears as a navy pill at the top-left. Targets `#main`.
+ */
+export function SkipLink() {
+  return (
+    <a
+      href="#main"
+      className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:px-4 focus:py-2 focus:rounded"
+      style={{
+        backgroundColor: "var(--p-navy)",
+        color: "var(--p-cream-soft)",
+        fontWeight: 600,
+      }}
+    >
+      Skip to content
+    </a>
+  );
+}
 
 export function SectionTitle({ children }: { children: string }) {
   return (
     <h2
       style={{
         color: gold,
-        fontSize: "5rem",
+        fontSize: "clamp(2.75rem, 10vw, 5rem)",
         fontWeight: 800,
         letterSpacing: "-0.02em",
+        lineHeight: 1,
       }}
-      className="mb-8"
+      className="mb-6 sm:mb-8"
     >
       {children}
     </h2>
@@ -58,13 +133,16 @@ export function useScrollToHash() {
 function NavLink({
   to,
   children,
+  onClick,
 }: {
   to: { pathname: string; hash?: string } | string;
   children: string;
+  onClick?: () => void;
 }) {
   return (
     <Link
       to={to}
+      onClick={onClick}
       className="relative inline-block group"
       style={{ color: navy, fontWeight: 600 }}
     >
@@ -80,52 +158,60 @@ function NavLink({
   );
 }
 
+const NAV_ITEMS: { to: { pathname: string; hash?: string } | string; label: string }[] = [
+  { to: "/", label: "Home" },
+  { to: { pathname: "/", hash: "#about" }, label: "About" },
+  { to: { pathname: "/", hash: "#work" }, label: "Work" },
+  { to: "/projects", label: "Projects" },
+  { to: "/publications", label: "Publications" },
+];
+
 export function Nav() {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const close = () => setOpen(false);
+
+  // Close the mobile menu whenever the route or hash changes.
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.hash]);
+
   return (
     <div
       className="sticky top-0 z-50"
       style={{ backgroundColor: "var(--p-cream)" }}
     >
       <nav
-        className="relative max-w-6xl mx-auto px-8 py-6 flex items-center"
+        className="relative max-w-6xl mx-auto px-6 sm:px-8 py-5 sm:py-6 flex items-center"
         aria-label="Primary"
       >
         <Link
           to="/"
+          onClick={close}
           style={{
             color: navy,
             fontWeight: 800,
-            fontSize: "1.6rem",
+            fontSize: "clamp(1.15rem, 4vw, 1.6rem)",
             letterSpacing: "-0.01em",
           }}
         >
           Ndachimya Edward.
         </Link>
 
-        <ul className="absolute left-1/2 -translate-x-1/2 flex gap-8">
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to={{ pathname: "/", hash: "#about" }}>About</NavLink>
-          </li>
-          <li>
-            <NavLink to={{ pathname: "/", hash: "#work" }}>Work</NavLink>
-          </li>
-          <li>
-            <NavLink to="/projects">Projects</NavLink>
-          </li>
-          <li>
-            <NavLink to="/publications">Publications</NavLink>
-          </li>
+        <ul className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-6 lg:gap-8">
+          {NAV_ITEMS.map((item) => (
+            <li key={item.label}>
+              <NavLink to={item.to}>{item.label}</NavLink>
+            </li>
+          ))}
         </ul>
 
         <a
           href="https://github.com/Mopheshi"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label="GitHub profile"
-          className="ml-auto group relative inline-flex items-center justify-center w-10 h-10 transition-colors duration-300 hover:text-[var(--p-gold)]"
+          className="ml-auto hidden md:inline-flex group relative items-center justify-center w-10 h-10 transition-colors duration-300 hover:text-[var(--p-gold)]"
           style={{ color: navy }}
         >
           <span
@@ -138,7 +224,59 @@ export function Nav() {
             className="relative z-10 transition-transform duration-300 ease-out group-hover:-rotate-12 group-hover:scale-110"
           />
         </a>
+
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          className="md:hidden ml-auto inline-flex items-center justify-center w-10 h-10 transition-colors duration-300 hover:text-[var(--p-gold)]"
+          style={{ color: navy }}
+        >
+          {open ? <X size={26} /> : <Menu size={26} />}
+        </button>
       </nav>
+
+      <div
+        id="mobile-menu"
+        className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+        style={{
+          backgroundColor: "var(--p-cream)",
+          borderTop: open ? "1px solid rgba(10,26,94,0.12)" : "1px solid transparent",
+        }}
+        aria-hidden={!open}
+      >
+        <ul className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-3">
+          {NAV_ITEMS.map((item) => (
+            <li key={item.label}>
+              <Link
+                to={item.to}
+                onClick={close}
+                className="block py-2 transition-colors duration-200 hover:text-[var(--p-gold)]"
+                style={{ color: navy, fontWeight: 600, fontSize: "1.1rem" }}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+          <li className="pt-2">
+            <a
+              href="https://github.com/Mopheshi"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={close}
+              className="inline-flex items-center gap-2 py-2 transition-colors duration-200 hover:text-[var(--p-gold)]"
+              style={{ color: navy, fontWeight: 600 }}
+            >
+              <Github size={20} />
+              <span>GitHub</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
@@ -147,16 +285,16 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="max-w-6xl mx-auto px-8 pt-12 pb-24 grid md:grid-cols-2 gap-10 items-center"
+      className="max-w-6xl mx-auto px-6 sm:px-8 pt-8 sm:pt-12 pb-16 sm:pb-24 grid md:grid-cols-2 gap-10 items-center"
     >
-      <div>
+      <div className="order-2 md:order-1">
         <p style={{ color: navy }} className="mb-3">
           Hello, I'm Ndachimya,
         </p>
         <h1
           style={{
             color: navy,
-            fontSize: "5.5rem",
+            fontSize: "clamp(2.75rem, 11vw, 5.5rem)",
             lineHeight: 0.95,
             fontWeight: 800,
             letterSpacing: "-0.02em",
@@ -174,7 +312,7 @@ export function Hero() {
           href="https://1drv.ms/b/c/6249ab7e47a4e210/IQCRjgUjmvSwRZpaPcRqCROsAcDZHqrNydQmCnueagLhbhs?e=FIEgsz"
           external
           ariaLabel="Resume"
-          className="mt-8 px-8 py-3 border-2"
+          className="mt-8 px-6 sm:px-8 py-3 border-2"
           style={{
             borderColor: "var(--p-navy)",
             color: "var(--p-navy)",
@@ -191,10 +329,12 @@ export function Hero() {
         </p>
       </div>
 
-      <div className="relative flex justify-center md:justify-end">
-        <Sparkle className="absolute -top-2 right-2 w-12 h-12 z-10" />
-        <Scribble className="absolute bottom-6 left-2 w-20 h-8 z-10" />
-        <Portrait />
+      <div className="order-1 md:order-2 relative flex justify-center md:justify-end">
+        <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px]">
+          <Sparkle className="absolute -top-2 right-2 w-10 h-10 sm:w-12 sm:h-12 z-10" />
+          <Scribble className="absolute bottom-6 left-2 w-16 h-7 sm:w-20 sm:h-8 z-10" />
+          <Portrait />
+        </div>
       </div>
     </section>
   );
@@ -208,7 +348,7 @@ export function Metrics() {
   ];
   return (
     <section
-      className="max-w-6xl mx-auto px-8 pb-12"
+      className="max-w-6xl mx-auto px-6 sm:px-8 pb-12"
       aria-label="At a glance"
     >
       <div
@@ -238,7 +378,7 @@ export function Metrics() {
 
 export function About() {
   return (
-    <section id="about" className="max-w-6xl mx-auto px-8 py-16">
+    <section id="about" className="max-w-6xl mx-auto px-6 sm:px-8 py-12 sm:py-16">
       <SectionTitle>about.</SectionTitle>
       <p style={{ color: navy }} className="max-w-xl mb-12">
         AI aficionado, entrepreneur, and a lover of tech and good music.
@@ -284,7 +424,7 @@ export function ProjectCard({ p }: { p: Project }) {
         className="w-full mb-4"
         style={{ aspectRatio: "16 / 10" }}
       >
-        <ImageWithFallback
+        <img
           src={p.img}
           alt={p.title}
           loading="lazy"
@@ -338,7 +478,7 @@ export function ProjectCard({ p }: { p: Project }) {
 
 export function Work() {
   return (
-    <section id="work" className="max-w-6xl mx-auto px-8 py-16">
+    <section id="work" className="max-w-6xl mx-auto px-6 sm:px-8 py-12 sm:py-16">
       <div className="flex items-end justify-between gap-6 flex-wrap mb-8">
         <SectionTitle>work.</SectionTitle>
         <Link
@@ -470,7 +610,7 @@ export function PublicationItem({ p }: { p: Publication }) {
 export function Music() {
   const [ref, seen] = useInView<HTMLDivElement>("400px");
   return (
-    <section id="music" className="max-w-6xl mx-auto px-8 py-16">
+    <section id="music" className="max-w-6xl mx-auto px-6 sm:px-8 py-12 sm:py-16">
       <SectionTitle>music.</SectionTitle>
       <p style={{ color: navy }} className="max-w-xl mb-12">
         A few tracks on heavy rotation while I code, read, and write.
@@ -511,7 +651,7 @@ export function Music() {
 // Testimonial — left in place, exported, but commented-out in App() until a real quote lands.
 export function Testimonial() {
   return (
-    <section className="max-w-6xl mx-auto px-8 py-16">
+    <section className="max-w-6xl mx-auto px-6 sm:px-8 py-12 sm:py-16">
       <blockquote
         className="max-w-3xl"
         style={{
@@ -561,7 +701,7 @@ function IconHover({
 
 export function Contact() {
   return (
-    <section id="contact" className="max-w-6xl mx-auto px-8 py-16 pb-32">
+    <section id="contact" className="max-w-6xl mx-auto px-6 sm:px-8 py-12 sm:py-16 pb-24 sm:pb-32">
       <SectionTitle>contact.</SectionTitle>
       <div className="grid md:grid-cols-2 gap-10 items-start">
         <HoverFill
@@ -572,7 +712,7 @@ export function Contact() {
           className="overflow-hidden"
           style={{ aspectRatio: "4 / 3", width: "100%" }}
         >
-          <ImageWithFallback
+          <img
             src={workspaceImg}
             alt="Edward's workspace"
             loading="lazy"
@@ -607,7 +747,7 @@ export function Contact() {
 export function Footer() {
   return (
     <footer
-      className="max-w-6xl mx-auto px-8 py-8 border-t"
+      className="max-w-6xl mx-auto px-6 sm:px-8 py-8 border-t"
       style={{ color: navy, borderColor: "rgba(10,26,94,0.2)" }}
     >
       <p>© 2026 Ndachimya</p>

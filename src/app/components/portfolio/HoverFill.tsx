@@ -39,7 +39,7 @@ export function HoverFill({
       href={href}
       aria-label={ariaLabel}
       target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       className={`group relative ${
         fill ? "block" : "inline-flex items-center justify-center"
       } overflow-hidden ${className}`}

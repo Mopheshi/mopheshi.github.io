@@ -1,4 +1,4 @@
-import portraitImg from "../../../imports/ndachimya.JPG";
+import portraitImg from "../../../imports/ndachimya.webp";
 
 const NAVY = "var(--p-navy)";
 
@@ -44,8 +44,7 @@ export function Portrait() {
     <>
       <span className="sr-only">Portrait of Ndachimya Edward</span>
       <div
-        className="relative"
-        style={{ width: 360, height: 360 }}
+        className="relative w-full aspect-square"
         role="img"
         aria-label="Portrait of Ndachimya Edward"
       >
@@ -81,4 +80,3 @@ export function Portrait() {
   );
 }
 
-export { portraitImg };

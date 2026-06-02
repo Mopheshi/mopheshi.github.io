@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
 import {
@@ -6,6 +5,7 @@ import {
   Footer,
   ProjectCard,
   SectionTitle,
+  SkipLink,
   useScrollToHash,
 } from "../components/portfolio/sections";
 import { allProjects, type Project } from "../components/portfolio/data";
@@ -14,28 +14,44 @@ import { useSeo } from "../components/portfolio/useSeo";
 
 const navy = "var(--p-navy)";
 
-export default function ProjectsPage() {
-  useSeo();
-  useScrollToHash();
+const projectsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Projects by Ndachimya Edward",
+  itemListElement: allProjects.map((p, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "CreativeWork",
+      name: p.title,
+      description: p.body,
+      url: p.href,
+      author: { "@type": "Person", name: "Ndachimya Edward" },
+    },
+  })),
+};
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Projects — Ndachimya Edward";
-    return () => {
-      document.title = prev;
-    };
-  }, []);
+export default function ProjectsPage() {
+  useSeo({
+    title: "Projects — Ndachimya Edward",
+    description:
+      "Complete project portfolio of Ndachimya Edward — applied AI products, fintech apps, mobile builds, and research from Vancus AI, VaultSplit, PersonaRAG, and more.",
+    path: "/projects",
+    extraJsonLd: [{ id: "ld-projects", data: projectsJsonLd }],
+  });
+  useScrollToHash();
 
   return (
     <div
       className="min-h-screen w-full"
       style={{ backgroundColor: "var(--p-cream)" }}
     >
+      <SkipLink />
       <Nav />
-      <main>
+      <main id="main">
         <section
           id="projects"
-          className="max-w-6xl mx-auto px-8 pt-12 pb-24"
+          className="max-w-6xl mx-auto px-6 sm:px-8 pt-8 sm:pt-12 pb-16 sm:pb-24"
         >
           <Link
             to="/#work"
@@ -67,7 +83,7 @@ export default function ProjectsPage() {
             demos, and store listings.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-x-10 gap-y-16">
+          <div className="grid md:grid-cols-2 gap-x-10 gap-y-12 sm:gap-y-16">
             {allProjects.map((p, i) => (
               <Reveal key={p.title} project={p} delayMs={(i % 2) * 80} />
             ))}

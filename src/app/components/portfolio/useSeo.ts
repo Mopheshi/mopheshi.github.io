@@ -1,6 +1,11 @@
 import { useEffect } from "react";
-import { portraitImg } from "./decorative";
 import faviconImg from "../../../imports/favicon.png";
+
+const SITE_URL = "https://mopheshi.github.io";
+const SITE_NAME = "Ndachimya Edward";
+const DEFAULT_TITLE = "Ndachimya Edward — AI Engineer & Founder";
+const DEFAULT_DESCRIPTION =
+  "Ndachimya Edward — AI Engineer and Founder building Vancus AI and VaultSplit. M.Sc. AI Engineering at İstanbul Okan University. Open to PhD offers and technical co-founder roles.";
 
 function setMeta(attr: "name" | "property", key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(
@@ -25,21 +30,73 @@ function setLink(rel: string, href: string, type?: string) {
   el.href = href;
 }
 
+function setJsonLd(id: string, data: unknown) {
+  let el = document.getElementById(id) as HTMLScriptElement | null;
+  if (!el) {
+    el = document.createElement("script");
+    el.id = id;
+    el.type = "application/ld+json";
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
+}
+
+function clearJsonLd(id: string) {
+  document.getElementById(id)?.remove();
+}
+
+const PERSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Ndachimya Edward",
+  alternateName: "Edward Ndachimya Magaji",
+  jobTitle: "AI Engineer & Founder",
+  description: DEFAULT_DESCRIPTION,
+  url: SITE_URL + "/",
+  image: SITE_URL + "/og-image.png",
+  email: "mailto:ndachimya@gmail.com",
+  sameAs: [
+    "https://linkedin.com/in/ndachimyaedward",
+    "https://github.com/Mopheshi",
+    "https://vancus.app",
+    "https://vaultsplit.co",
+  ],
+  worksFor: { "@type": "Organization", name: "Vancus AI" },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "İstanbul Okan University",
+  },
+};
+
+type SeoConfig = {
+  /** Page title. Defaults to the brand title. */
+  title?: string;
+  /** Meta description. Defaults to the brand description. */
+  description?: string;
+  /** Route path including leading slash, e.g. "/projects". Defaults to "/". */
+  path?: string;
+  /** Extra JSON-LD blocks for this route. The id is used to upsert and cleanup. */
+  extraJsonLd?: { id: string; data: unknown }[];
+};
+
 /**
- * Injects SEO meta, Open Graph, Twitter card, canonical, favicon and a
- * JSON-LD Person schema at runtime.
+ * Injects SEO meta, Open Graph, Twitter card, canonical, favicon and JSON-LD
+ * for the current route. Pass overrides for per-route titles/descriptions
+ * and route-specific structured data.
  *
  * NOTE: social scrapers (LinkedIn, Twitter, WhatsApp, Slack) generally do
- * NOT execute JS, so for shared previews to work the same tags must also
- * live in the real index.html once the project is ejected to GitHub Pages.
+ * NOT execute JS. Static fallbacks live in index.html for the home route.
  */
-export function useSeo() {
+export function useSeo(config: SeoConfig = {}) {
+  const title = config.title ?? DEFAULT_TITLE;
+  const description = config.description ?? DEFAULT_DESCRIPTION;
+  const path = config.path ?? "/";
+  const extraIds = (config.extraJsonLd ?? []).map((e) => e.id).join(",");
+  const extraData = JSON.stringify(config.extraJsonLd ?? []);
+
   useEffect(() => {
-    const title = "Ndachimya Edward — AI Engineer & Founder";
-    const description =
-      "Ndachimya Edward — AI Engineer and Founder building Vancus AI and VaultSplit. M.Sc. AI Engineering at İstanbul Okan University. Open to PhD offers and technical co-founder roles.";
-    const url = "https://mopheshi.github.io/";
-    const image = `${url}og-image.png`;
+    const url = SITE_URL + path;
+    const image = SITE_URL + "/og-image.png";
 
     document.title = title;
     document.documentElement.lang = "en-GB";
@@ -58,6 +115,7 @@ export function useSeo() {
       "width=device-width, initial-scale=1, viewport-fit=cover",
     );
     setMeta("name", "theme-color", "#fdf6b2");
+    setMeta("name", "referrer", "strict-origin-when-cross-origin");
 
     setMeta("property", "og:type", "website");
     setMeta("property", "og:title", title);
@@ -65,7 +123,7 @@ export function useSeo() {
     setMeta("property", "og:url", url);
     setMeta("property", "og:image", image);
     setMeta("property", "og:locale", "en_GB");
-    setMeta("property", "og:site_name", "Ndachimya Edward");
+    setMeta("property", "og:site_name", SITE_NAME);
 
     setMeta("name", "twitter:card", "summary_large_image");
     setMeta("name", "twitter:title", title);
@@ -73,38 +131,16 @@ export function useSeo() {
     setMeta("name", "twitter:image", image);
 
     setLink("canonical", url);
-    setLink("icon", faviconImg, "image/jpeg");
+    setLink("icon", faviconImg, "image/png");
     setLink("apple-touch-icon", faviconImg);
 
-    const ldId = "ld-person";
-    let ld = document.getElementById(ldId) as HTMLScriptElement | null;
-    if (!ld) {
-      ld = document.createElement("script");
-      ld.id = ldId;
-      ld.type = "application/ld+json";
-      document.head.appendChild(ld);
-    }
-    ld.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      name: "Ndachimya Edward",
-      alternateName: "Edward Ndachimya Magaji",
-      jobTitle: "AI Engineer & Founder",
-      description,
-      url,
-      image,
-      email: "mailto:ndachimya@gmail.com",
-      sameAs: [
-        "https://linkedin.com/in/ndachimyaedward",
-        "https://github.com/Mopheshi",
-        "https://vancus.app",
-        "https://vaultsplit.co",
-      ],
-      worksFor: { "@type": "Organization", name: "Vancus AI" },
-      alumniOf: {
-        "@type": "CollegeOrUniversity",
-        name: "İstanbul Okan University",
-      },
-    });
-  }, []);
+    setJsonLd("ld-person", PERSON_LD);
+
+    const extras = config.extraJsonLd ?? [];
+    for (const e of extras) setJsonLd(e.id, e.data);
+
+    return () => {
+      for (const e of extras) clearJsonLd(e.id);
+    };
+  }, [title, description, path, extraIds, extraData, config.extraJsonLd]);
 }

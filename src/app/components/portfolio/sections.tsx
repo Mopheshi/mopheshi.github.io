@@ -116,17 +116,16 @@ export function SectionTitle({ children }: { children: string }) {
 export function useScrollToHash() {
   const location = useLocation();
   useEffect(() => {
-    if (!location.hash) {
-      if (location.pathname === "/") return;
-      window.scrollTo({ top: 0 });
-      return;
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      // Defer so the target section has mounted on first paint of the route.
+      const t = window.setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 50);
+      return () => window.clearTimeout(t);
     }
-    const id = location.hash.slice(1);
-    // Defer so the target section has mounted on first paint of the route.
-    const t = window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
-    return () => window.clearTimeout(t);
+    // No hash → snap to top on any route change.
+    window.scrollTo(0, 0);
   }, [location.pathname, location.hash]);
 }
 
@@ -135,7 +134,7 @@ function NavLink({
   children,
   onClick,
 }: {
-  to: { pathname: string; hash?: string } | string;
+  to: string;
   children: string;
   onClick?: () => void;
 }) {
@@ -158,10 +157,10 @@ function NavLink({
   );
 }
 
-const NAV_ITEMS: { to: { pathname: string; hash?: string } | string; label: string }[] = [
+const NAV_ITEMS: { to: string; label: string }[] = [
   { to: "/", label: "Home" },
-  { to: { pathname: "/", hash: "#about" }, label: "About" },
-  { to: { pathname: "/", hash: "#work" }, label: "Work" },
+  { to: "/#about", label: "About" },
+  { to: "/#work", label: "Work" },
   { to: "/projects", label: "Projects" },
   { to: "/publications", label: "Publications" },
 ];

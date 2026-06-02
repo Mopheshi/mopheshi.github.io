@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output (CI rebuilds on push)
+dist/
+
+# Local environment
+.env
+.env.local
+.env.*.local
+
+# IDE / editor scratch state
+.idea/jsLibraryMappings.xml
+.idea/workspace.xml
+.vscode/
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*

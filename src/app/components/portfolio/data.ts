@@ -24,6 +24,7 @@ export type Publication = {
   year: number;
   status: PublicationStatus;
   href?: string;
+  publisher?: string;
 };
 
 const personaRagImg =
@@ -281,7 +282,8 @@ export const publications: Publication[] = [
     venue: HORA,
     year: 2026,
     status: "Accepted",
-    href: "https://github.com/Mopheshi/ACM-Optimiser",
+    href: "https://ieeexplore.ieee.org/document/11537092",
+    publisher: "IEEE",
   },
   {
     title:
@@ -290,7 +292,8 @@ export const publications: Publication[] = [
     venue: HORA,
     year: 2026,
     status: "Accepted",
-    href: "https://github.com/Mopheshi/ExpertSystemforMedDiag",
+    href: "https://doi.org/10.1109/ICHORA69329.2026.11536979",
+    publisher: "IEEE",
   },
   {
     title:
@@ -300,6 +303,8 @@ export const publications: Publication[] = [
     venue: HORA,
     year: 2026,
     status: "Accepted",
+    href: "https://doi.org/10.1109/ICHORA69329.2026.11537136",
+    publisher: "IEEE",
   },
   {
     title:
@@ -309,6 +314,8 @@ export const publications: Publication[] = [
     venue: HORA,
     year: 2026,
     status: "Accepted",
+    href: "https://doi.org/10.1109/ICHORA69329.2026.11537105",
+    publisher: "IEEE",
   },
   {
     title:
@@ -318,6 +325,8 @@ export const publications: Publication[] = [
     venue: HORA,
     year: 2026,
     status: "Accepted",
+    href: "https://doi.org/10.1109/ICHORA69329.2026.11537050",
+    publisher: "IEEE",
   },
 ];
 

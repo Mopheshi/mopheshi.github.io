@@ -577,10 +577,29 @@ export function AuthorsLine({ raw }: { raw: string }) {
 }
 
 export function PublicationItem({ p }: { p: Publication }) {
+  const showSeePublication = p.status === "Accepted" && !!p.href;
   return (
     <article className="grid md:grid-cols-[12rem_1fr] gap-4 md:gap-8">
-      <div className="flex flex-col gap-2" style={{ color: navy }}>
-        <StatusPill status={p.status} />
+      <div className="flex flex-col gap-2 items-start" style={{ color: navy }}>
+        {showSeePublication ? (
+          <HoverFill
+            href={p.href!}
+            external
+            ariaLabel={`See publication: ${p.title}`}
+            className="text-xs uppercase tracking-wider px-2 py-1 border"
+            style={{
+              backgroundColor: "var(--p-navy)",
+              color: "var(--p-cream-soft)",
+              borderColor: "var(--p-navy)",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+            }}
+          >
+            See publication
+          </HoverFill>
+        ) : (
+          <StatusPill status={p.status} />
+        )}
         <span style={{ opacity: 0.75 }}>{p.year}</span>
       </div>
       <div style={{ color: navy }}>
@@ -602,6 +621,11 @@ export function PublicationItem({ p }: { p: Publication }) {
         <p className="italic mt-1" style={{ color: navy, opacity: 0.85 }}>
           {p.venue}
         </p>
+        {p.publisher && (
+          <p className="mt-1" style={{ color: navy, opacity: 0.85 }}>
+            <span style={{ fontWeight: 700 }}>Publisher:</span> {p.publisher}
+          </p>
+        )}
       </div>
     </article>
   );

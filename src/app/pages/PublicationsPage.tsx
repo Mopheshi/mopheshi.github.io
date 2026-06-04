@@ -40,6 +40,9 @@ const publicationsJsonLd = {
       datePublished: String(p.year),
       creativeWorkStatus: p.status,
       ...(p.href ? { url: p.href } : {}),
+      ...(p.publisher
+        ? { publisher: { "@type": "Organization", name: p.publisher } }
+        : {}),
     },
   })),
 };

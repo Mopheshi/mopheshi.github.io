@@ -346,13 +346,13 @@ export const experiences = [
   {
     range: "Nov. 2024 — Jan. 2026",
     role: "Founding Engineer, VaultSplit Technologies",
-    location: "Abuja, Nigeria",
+    location: "Remote — FCT, Nigeria",
     body: "Selected among 24 startups worldwide for the 45-day Dubai Create Apps Accelerator. Designed, built, and deployed the VaultSplit mobile app and backend; implemented CI/CD pipelines and managed iOS / Android distribution.",
   },
   {
     range: "Feb. 2023 — Present",
     role: "Founder, Atachiz02 Softwares",
-    location: "Abuja, Nigeria",
+    location: "FCT, Nigeria",
     body: "Independent studio I run on the side — shipping mobile and web products end-to-end for clients and personal bets, from first sketch to App Store and Play Store delivery.",
   },
 ];

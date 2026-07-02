@@ -343,7 +343,7 @@ export function Hero() {
 export function Metrics() {
   const items = [
     { n: "5", label: "papers accepted (2 selected)" },
-    { n: "5", label: "production products shipped" },
+    { n: "6", label: "production products shipped" },
     { n: "1", label: "accelerator (Dubai Create Apps)" },
   ];
   return (

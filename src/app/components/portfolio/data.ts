@@ -332,6 +332,12 @@ export const publications: Publication[] = [
 
 export const experiences = [
   {
+    range: "Jun. 2026 — Present",
+    role: "AI Engineer, SALI",
+    location: "Remote — West Bridgford, Nottingham, England",
+    body: "Engineer on DocAI, the document-analysis service at the core of SALI's AI-powered sustainability compliance platform — it validates documents, grades evidence quality, and returns ESG metrics that other services call for analysis. Also work on SaliUN, a United Nations project that uses DocAI to analyse organisational documents and extract sustainability performance metrics and insights against UN SDG frameworks, alongside contributing to other products across the company.",
+  },
+  {
     range: "Jan. 2026 — Present",
     role: "Founder, Vancus AI",
     location: "İstanbul, Türkiye",

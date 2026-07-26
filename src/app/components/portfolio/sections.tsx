@@ -342,7 +342,7 @@ export function Hero() {
 
 export function Metrics() {
   const items = [
-    { n: "5", label: "papers accepted (2 selected)" },
+    { n: "6", label: "papers published (2 selected)" },
     { n: "6", label: "production products shipped" },
     { n: "1", label: "accelerator (Dubai Create Apps)" },
   ];
@@ -527,6 +527,11 @@ export function StatusPill({ status }: { status: Publication["status"] }) {
     { bg: string; color: string; border: string }
   > = {
     Accepted: {
+      bg: "var(--p-navy)",
+      color: "var(--p-cream-soft)",
+      border: "var(--p-navy)",
+    },
+    Published: {
       bg: "var(--p-navy)",
       color: "var(--p-cream-soft)",
       border: "var(--p-navy)",

@@ -13,7 +13,7 @@ export type Project = {
   stores?: { kind: Store; href: string; label: string }[];
 };
 
-export type PublicationStatus = "Accepted" | "Submitted" | "Under Review";
+export type PublicationStatus = "Published" | "Accepted" | "Submitted" | "Under Review";
 
 export type Publication = {
   title: string;
@@ -257,31 +257,42 @@ const HORA =
 const ASYU = "Innovations in Intelligent Systems and Applications Conference";
 
 export const publications: Publication[] = [
+  // {
+  //   title:
+  //     "PersonaRAG: An Agentic LLM Framework for Behavioural User Modelling and Contextual Recommendation",
+  //   authors: "N. M. Edward",
+  //   venue: ASYU,
+  //   year: 2026,
+  //   status: "Submitted",
+  //   href: "https://github.com/Mopheshi/bcthack",
+  // },
   {
     title:
-      "PersonaRAG: An Agentic LLM Framework for Behavioural User Modelling and Contextual Recommendation",
-    authors: "N. M. Edward",
-    venue: ASYU,
-    year: 2026,
-    status: "Submitted",
-    href: "https://github.com/Mopheshi/bcthack",
-  },
-  {
-    title:
-      "Lightweight Machine Learning Models for Fake News Detection: An Ensemble Approach with Part-of-Speech Features",
+      "A Reproducible Benchmark of U-Net Variants for Multimodal Brain Tumour Segmentation on BraTS 2020 Comparative Evaluation and Modality Ablation",
     authors:
-      "N. M. Edward, L. A. Obadiah, J. Daniel, N. M. Abubakar, D. Godwin, C. Ishaya, G. Nyibong, Y. G. Bello",
+      "L. A. Obadiah, N. M. Abubakar, D. Godwin, N. M. Edward, G. Nyibong, J. Daniel",
     venue: ASYU,
     year: 2026,
-    status: "Submitted",
+    status: "Accepted",
+    // href: "",
+    publisher: "IEEE",
   },
+  // {
+  //   title:
+  //     "Lightweight Machine Learning Models for Fake News Detection: An Ensemble Approach with Part-of-Speech Features",
+  //   authors:
+  //     "N. M. Edward, L. A. Obadiah, J. Daniel, N. M. Abubakar, D. Godwin, C. Ishaya, G. Nyibong, Y. G. Bello",
+  //   venue: ASYU,
+  //   year: 2026,
+  //   status: "Submitted",
+  // },
   {
     title:
       "Adaptive Circular Manifold (ACM): A Density-Dependent Geometric Metric for Robust Gradient Descent",
     authors: "N. M. Edward, J. Daniel, Y. Dauda",
     venue: HORA,
     year: 2026,
-    status: "Accepted",
+    status: "Published",
     href: "https://ieeexplore.ieee.org/document/11537092",
     publisher: "IEEE",
   },
@@ -291,7 +302,7 @@ export const publications: Publication[] = [
     authors: "N. M. Edward, D. Godwin, F. Odeh, A. Sağlam, M. Leila",
     venue: HORA,
     year: 2026,
-    status: "Accepted",
+    status: "Published",
     href: "https://doi.org/10.1109/ICHORA69329.2026.11536979",
     publisher: "IEEE",
   },
@@ -299,10 +310,10 @@ export const publications: Publication[] = [
     title:
       "Explainable Prediction of Daily Stress and Sleep Quality from Passive Smartphone Behavioral Sensing: A SHAP-Based Analysis of the StudentLife Dataset",
     authors:
-      "N. M. Edward, S. Wilson, J. Daniel, C. Ishaya, Z. Musa, V. Augustine, Y. G. Bello, L. A. Obadiah, D. K. Titus",
+      "J. Daniel, C. Ishaya, N. M. Edward, V. Augustine, Y. G. Bello, L. A. Obadiah, S. Wilson, Z. Musa, D. K. Titus",
     venue: HORA,
     year: 2026,
-    status: "Accepted",
+    status: "Published",
     href: "https://doi.org/10.1109/ICHORA69329.2026.11537136",
     publisher: "IEEE",
   },
@@ -313,7 +324,7 @@ export const publications: Publication[] = [
       "D. Godwin, D. K. Titus, N. M. Edward, N. M. Abubakar, C. Ishaya",
     venue: HORA,
     year: 2026,
-    status: "Accepted",
+    status: "Published",
     href: "https://doi.org/10.1109/ICHORA69329.2026.11537105",
     publisher: "IEEE",
   },
@@ -324,7 +335,7 @@ export const publications: Publication[] = [
       "L. A. Obadiah, D. Godwin, N. M. Edward, N. M. Abubakar, J. Daniel, D. K. Titus",
     venue: HORA,
     year: 2026,
-    status: "Accepted",
+    status: "Published",
     href: "https://doi.org/10.1109/ICHORA69329.2026.11537050",
     publisher: "IEEE",
   },

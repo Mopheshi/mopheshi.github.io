@@ -342,7 +342,7 @@ export function Hero() {
 
 export function Metrics() {
   const items = [
-    { n: "6", label: "papers published (2 selected)" },
+    { n: "6", label: "papers published" },
     { n: "6", label: "production products shipped" },
     { n: "1", label: "accelerator (Dubai Create Apps)" },
   ];

@@ -325,7 +325,7 @@ export function Hero() {
         <p style={{ color: navy }} className="mt-6 max-w-md">
           <span style={{ fontWeight: 700 }}>Currently:</span> M.Sc. AI
           Engineering at İstanbul Okan University, building Vancus AI, open to
-          PhD offers.
+          PhD offers in AI and/or Robotics.
         </p>
       </div>
 

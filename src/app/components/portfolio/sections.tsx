@@ -1,4 +1,12 @@
-import { Github, Mail, Linkedin, ArrowRight, Menu, X } from "lucide-react";
+import {
+  Github,
+  Mail,
+  Linkedin,
+  ArrowRight,
+  ArrowLeft,
+  Menu,
+  X,
+} from "lucide-react";
 import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { HoverFill } from "./HoverFill";
@@ -7,10 +15,11 @@ import {
   projects,
   experiences,
   favouriteTracks,
+  research,
   type Project,
   type Publication,
 } from "./data";
-import { useInView } from "./useInView";
+import { useInView, prefersReducedMotion } from "./useInView";
 import workspaceImg from "../../../imports/workspace.webp";
 
 const navy = "var(--p-navy)";
@@ -121,7 +130,9 @@ export function useScrollToHash() {
       const id = location.hash.slice(1);
       // Defer so the target section has mounted on first paint of the route.
       const t = window.setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        document.getElementById(id)?.scrollIntoView({
+          behavior: prefersReducedMotion() ? "auto" : "smooth",
+        });
       }, 50);
       return () => window.clearTimeout(t);
     }
@@ -160,10 +171,10 @@ function NavLink({
 
 const NAV_ITEMS: { to: string; label: string }[] = [
   { to: "/", label: "Home" },
-  { to: "/#about", label: "About" },
-  { to: "/#work", label: "Work" },
-  { to: "/projects", label: "Projects" },
+  { to: "/research", label: "Research" },
   { to: "/publications", label: "Publications" },
+  { to: "/projects", label: "Projects" },
+  { to: "/#about", label: "About" },
 ];
 
 export function Nav() {
@@ -281,6 +292,58 @@ export function Nav() {
   );
 }
 
+/**
+ * Shared chrome for the standalone routes: skip link, nav, `#main` landmark
+ * and footer. Keeps /projects, /publications and /research from each
+ * re-declaring the same wrapper.
+ */
+export function PageShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="min-h-screen w-full"
+      style={{ backgroundColor: "var(--p-cream)" }}
+    >
+      <SkipLink />
+      <Nav />
+      <main id="main">{children}</main>
+      <Footer />
+    </div>
+  );
+}
+
+/** Underlined back-arrow link used at the top of every standalone route. */
+export function BackLink({
+  to = "/",
+  label = "Back to home",
+}: {
+  to?: string;
+  label?: string;
+}) {
+  return (
+    <Link
+      to={to}
+      className="group inline-flex items-center gap-2 mb-10"
+      style={{ color: navy, fontWeight: 600 }}
+      aria-label={label}
+    >
+      <ArrowLeft
+        size={18}
+        className="transition-transform duration-300 group-hover:-translate-x-1 group-hover:text-[var(--p-gold)]"
+      />
+      <span className="relative">
+        <span className="transition-colors duration-300 group-hover:text-[var(--p-gold)]">
+          {label}
+        </span>
+        <span
+          aria-hidden
+          className="absolute left-0 -bottom-1 h-[2px] w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"
+          style={{ backgroundColor: "var(--p-gold)" }}
+        />
+      </span>
+    </Link>
+  );
+}
+
 export function Hero() {
   return (
     <section
@@ -300,32 +363,48 @@ export function Hero() {
             letterSpacing: "-0.02em",
           }}
         >
-          AI Engineer
+          Robotics
           <br />
-          &amp; Founder
+          &amp; AI Researcher
         </h1>
         <p style={{ color: navy }} className="mt-4">
           based in İstanbul, Türkiye.
         </p>
 
-        <HoverFill
-          href="https://1drv.ms/b/c/6249ab7e47a4e210/IQCRjgUjmvSwRZpaPcRqCROsAcDZHqrNydQmCnueagLhbhs?e=FIEgsz"
-          external
-          ariaLabel="Resume"
-          className="mt-8 px-6 sm:px-8 py-3 border-2"
-          style={{
-            borderColor: "var(--p-navy)",
-            color: "var(--p-navy)",
-            backgroundColor: "var(--p-cream-soft)",
-          }}
-        >
-          Resume
-        </HoverFill>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <HoverFill
+            href="https://1drv.ms/b/c/6249ab7e47a4e210/IQCRjgUjmvSwRZpaPcRqCROsAcDZHqrNydQmCnueagLhbhs?e=FIEgsz"
+            external
+            ariaLabel="Curriculum vitae"
+            className="px-6 sm:px-8 py-3 border-2"
+            style={{
+              borderColor: "var(--p-navy)",
+              color: "var(--p-navy)",
+              backgroundColor: "var(--p-cream-soft)",
+            }}
+          >
+            CV
+          </HoverFill>
+          <HoverFill
+            href={research.videoHref}
+            external
+            ariaLabel="Watch the teleoperation simulation demo"
+            className="px-6 sm:px-8 py-3 border-2"
+            style={{
+              borderColor: "var(--p-navy)",
+              color: "var(--p-cream-soft)",
+              backgroundColor: "var(--p-navy)",
+            }}
+          >
+            Watch teleoperation demo
+          </HoverFill>
+        </div>
 
         <p style={{ color: navy }} className="mt-6 max-w-md">
           <span style={{ fontWeight: 700 }}>Currently:</span> M.Sc. AI
-          Engineering at İstanbul Okan University, building Vancus AI, open to
-          PhD offers in AI and/or Robotics.
+          Engineering at İstanbul Okan University, researching IMU-based
+          teleoperation of a Unitree G1 humanoid. Applying for robotics PhD
+          positions.
         </p>
       </div>
 
@@ -342,9 +421,9 @@ export function Hero() {
 
 export function Metrics() {
   const items = [
-    { n: "6", label: "papers published" },
+    { n: "7", label: "peer-reviewed papers (5 published, 2 accepted)" },
+    { n: "3", label: "as first author" },
     { n: "6", label: "production products shipped" },
-    { n: "1", label: "accelerator (Dubai Create Apps)" },
   ];
   return (
     <section
@@ -381,11 +460,13 @@ export function About() {
     <section id="about" className="max-w-6xl mx-auto px-6 sm:px-8 py-12 sm:py-16">
       <SectionTitle>about.</SectionTitle>
       <p style={{ color: navy }} className="max-w-xl mb-12">
-        AI aficionado, entrepreneur, and a lover of tech and good music.
-        Currently a graduate student exploring applied AI research and deep
-        learning, while building products as a founder. Open to PhD offers and
-        technical co-founder / founder opportunities where rigorous research
-        meets real-world engineering.
+        A robotics and AI researcher who also ships. My thesis work is on
+        trustworthy shared autonomy for human–robot teleoperation; alongside it
+        I have taken production systems from empty repository to the App Store,
+        which is where my instinct for constraints, latency budgets and
+        failure modes comes from. Applying for robotics PhD positions, and
+        happiest where rigorous research meets engineering that has to survive
+        contact with the real world.
       </p>
 
       <div className="md:pl-32 space-y-8">
@@ -503,8 +584,8 @@ export function Work() {
       </div>
 
       <p style={{ color: navy }} className="max-w-xl mb-12">
-        Selected products and research across applied AI, mobile, and backend
-        engineering.
+        Selected products and research beyond the robotics work — applied AI,
+        mobile, and backend engineering.
       </p>
 
       <div className="grid md:grid-cols-2 gap-10">
@@ -751,9 +832,10 @@ export function Contact() {
         </HoverFill>
         <div style={{ color: navy }}>
           <p className="mb-6">
-            Open to PhD offers and technical co-founder / founder roles where
-            applied AI research meets shipping engineering. Currently in
-            İstanbul.
+            Applying for robotics PhD positions — shared autonomy,
+            teleoperation and constraint-aware control especially. Also open to
+            research collaborations and technical co-founder roles. Currently
+            in İstanbul.
           </p>
           <div className="flex gap-5">
             <IconHover href="mailto:ndachimya@gmail.com" ariaLabel="Email">

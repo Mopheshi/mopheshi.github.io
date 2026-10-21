@@ -12,6 +12,7 @@ import {
   CalendlyBadge,
   useScrollToHash,
 } from "./components/portfolio/sections";
+import { Research, Education } from "./components/portfolio/research";
 import { useSeo } from "./components/portfolio/useSeo";
 
 export default function App() {
@@ -28,7 +29,9 @@ export default function App() {
       <main id="main">
         <Hero />
         <Metrics />
+        <Research />
         <About />
+        <Education />
         <Work />
         {/* <Testimonial /> */}
         <Music />

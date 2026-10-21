@@ -1,4 +1,5 @@
 import type { ReactNode, CSSProperties } from "react";
+import { Link } from "react-router";
 
 type Props = {
   href: string;
@@ -20,8 +21,20 @@ type Props = {
 };
 
 /**
+ * True for in-app routes ("/research"), false for absolute URLs, `mailto:`,
+ * `tel:` and bare hash targets. Lets callers pass `external` loosely without
+ * accidentally punching internal navigation out into a new browser tab.
+ */
+function isInternalRoute(href: string) {
+  return href.startsWith("/") && !href.startsWith("//");
+}
+
+/**
  * Single shared hover effect: a gold panel slides in from the left.
  * Used for buttons, link text, icon tiles, and image overlays.
+ *
+ * In-app hrefs are routed through react-router so they do not trigger a full
+ * document reload; everything else renders a plain anchor.
  */
 export function HoverFill({
   href,
@@ -34,17 +47,11 @@ export function HoverFill({
   fill = false,
   style,
 }: Props) {
-  return (
-    <a
-      href={href}
-      aria-label={ariaLabel}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noopener noreferrer" : undefined}
-      className={`group relative ${
-        fill ? "block" : "inline-flex items-center justify-center"
-      } overflow-hidden ${className}`}
-      style={style}
-    >
+  const internal = isInternalRoute(href);
+  const openInNewTab = external && !internal;
+
+  const content = (
+    <>
       {fill && children}
       <span
         aria-hidden
@@ -63,6 +70,33 @@ export function HoverFill({
           {children}
         </span>
       )}
+    </>
+  );
+
+  const shared = {
+    "aria-label": ariaLabel,
+    className: `group relative ${
+      fill ? "block" : "inline-flex items-center justify-center"
+    } overflow-hidden ${className}`,
+    style,
+  };
+
+  if (internal) {
+    return (
+      <Link to={href} {...shared}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      target={openInNewTab ? "_blank" : undefined}
+      rel={openInNewTab ? "noopener noreferrer" : undefined}
+      {...shared}
+    >
+      {content}
     </a>
   );
 }

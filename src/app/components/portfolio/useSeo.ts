@@ -3,9 +3,9 @@ import faviconImg from "../../../imports/favicon.png";
 
 const SITE_URL = "https://mopheshi.github.io";
 const SITE_NAME = "Ndachimya Edward";
-const DEFAULT_TITLE = "Ndachimya Edward — AI Engineer & Founder";
+const DEFAULT_TITLE = "Ndachimya Edward — Robotics & AI Researcher";
 const DEFAULT_DESCRIPTION =
-  "Ndachimya Edward — AI Engineer and Founder building Vancus AI. M.Sc. AI Engineering at İstanbul Okan University. Open to PhD offers and technical co-founder roles.";
+  "Ndachimya Edward — robotics and AI researcher working on trustworthy shared autonomy for human–robot teleoperation. M.Sc. AI Engineering at İstanbul Okan University, researching IMU-based arm teleoperation of a Unitree G1 humanoid. Applying for robotics PhD positions.";
 
 function setMeta(attr: "name" | "property", key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(
@@ -50,7 +50,7 @@ const PERSON_LD = {
   "@type": "Person",
   name: "Ndachimya Edward",
   alternateName: "Edward Ndachimya Magaji",
-  jobTitle: "AI Engineer & Founder",
+  jobTitle: "Robotics & AI Researcher",
   description: DEFAULT_DESCRIPTION,
   url: SITE_URL + "/",
   image: SITE_URL + "/og-image.png",
@@ -62,10 +62,26 @@ const PERSON_LD = {
     "https://vaultsplit.co",
   ],
   worksFor: { "@type": "Organization", name: "Vancus AI" },
-  alumniOf: {
+  affiliation: {
     "@type": "CollegeOrUniversity",
     name: "İstanbul Okan University",
   },
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "İstanbul Okan University" },
+    { "@type": "CollegeOrUniversity", name: "Modibbo Adama University" },
+  ],
+  knowsAbout: [
+    "Robotics",
+    "Human–robot teleoperation",
+    "Shared autonomy",
+    "Constraint-aware control",
+    "Inverse kinematics",
+    "Motion retargeting",
+    "Inertial measurement units",
+    "Robot learning from demonstration",
+    "Machine learning",
+    "Neuro-symbolic reasoning",
+  ],
 };
 
 type SeoConfig = {
@@ -105,7 +121,7 @@ export function useSeo(config: SeoConfig = {}) {
     setMeta(
       "name",
       "keywords",
-      "Ndachimya Edward, AI Engineer, AI Founder, Vancus AI, VaultSplit, applied AI, deep learning, PhD candidate, technical co-founder, İstanbul, Nigeria",
+      "Ndachimya Edward, robotics researcher, robotics PhD applicant, teleoperation, shared autonomy, humanoid robot, Unitree G1, IMU motion capture, motion retargeting, inverse kinematics, learning from demonstration, AI Engineer, Vancus AI, İstanbul Okan University, Nigeria",
     );
     setMeta("name", "author", "Ndachimya Edward");
     setMeta("name", "robots", "index, follow");

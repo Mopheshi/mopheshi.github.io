@@ -1,8 +1,12 @@
+import teleoperationImg from "../../../imports/teleoperation.webp";
 import vancusImg from "../../../imports/vancus.webp";
 import vaultsplitImg from "../../../imports/vaultsplit.webp";
 import paysphereImg from "../../../imports/paysphere.webp";
 
 export type Store = "play" | "appstore" | "amazon" | "github" | "web";
+
+/** Google Drive file id of the teleoperation simulation demo video. */
+export const DEMO_VIDEO_ID = "17Kym9MnuxIv6Wj_WgTTDskb1mgKoBsQu";
 
 export type Project = {
   date: string;
@@ -15,6 +19,53 @@ export type Project = {
 
 export type PublicationStatus = "Published" | "Accepted" | "Submitted" | "Under Review";
 
+export type ResearchMetric = {
+  value: string;
+  label: string;
+  /** Optional baseline/comparison shown underneath the figure. */
+  detail?: string;
+};
+
+export type ResearchPillar = { title: string; body: string };
+
+export type Research = {
+  title: string;
+  kind: string;
+  period: string;
+  stage: string;
+  supervisor: string;
+  institution: string;
+  /** One-paragraph framing used on both the home section and /research. */
+  summary: string;
+  /** Google Drive file id of the simulation demo video. */
+  videoId: string;
+  /** Canonical share link, used as the fallback for the embed. */
+  videoHref: string;
+  /** Intrinsic aspect ratio of the recording, e.g. "16 / 9". */
+  videoAspectRatio: string;
+  /** Human-readable caption shown under the player. */
+  videoCaption: string;
+  metrics: ResearchMetric[];
+  pillars: ResearchPillar[];
+  next: string;
+  stack: string[];
+};
+
+export type Education = {
+  range: string;
+  degree: string;
+  institution: string;
+  location: string;
+  grade: string;
+  thesis?: string;
+  coursework?: string;
+  honours?: string;
+};
+
+export type SkillGroup = { heading: string; items: string };
+
+export type Award = { year: string; title: string; detail?: string };
+
 export type Publication = {
   title: string;
   /** Pre-formatted author list. Use the exact token "N. M. Edward" for me — it
@@ -26,6 +77,9 @@ export type Publication = {
   href?: string;
   publisher?: string;
 };
+
+const fakeNewsImg =
+  "https://images.unsplash.com/photo-1495020689067-958852a7765e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80";
 
 const personaRagImg =
   "https://images.unsplash.com/photo-1677442136019-21780ecad995?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80";
@@ -50,6 +104,37 @@ const kilbaImg =
 
 const kilbaDictionaryImg =
   "https://images.unsplash.com/photo-1532012197267-da84d127e765?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80";
+
+const teleoperation: Project = {
+  date: "2026 — Present",
+  title: "IMU-Based Arm Teleoperation of a Unitree G1 Humanoid",
+  body: "M.Sc. thesis research (simulation stage). A real-time pipeline that maps an operator's arm — measured by five wearable IMUs over BLE — onto a simulated Unitree G1 at 30 Hz. Three-pose calibration cancels unknown mounting and heading offsets (1.8° median arm-direction error against 74° for a single-pose baseline); direction-matching inverse kinematics on the G1 URDF solves in about 10 ms; and a constraint-aware safety layer cuts blocked frames from 40% to 7% while holding the last safe pose on failure.",
+  img: teleoperationImg,
+  href: "/research",
+  stores: [
+    {
+      kind: "web",
+      href: `https://drive.google.com/file/d/${DEMO_VIDEO_ID}/view?usp=sharing`,
+      label: "Demo video",
+    },
+    { kind: "web", href: "/research", label: "Research write-up" },
+  ],
+};
+
+const fakeNewsLite: Project = {
+  date: "2026 — Accepted",
+  title: "Fake News Detection on Commodity CPUs",
+  body: "First-author work pairing XGBoost with a TextCNN in a CPU-only ensemble that carries 429× fewer parameters than a fine-tuned BERT. Publisher-holdout and cross-dataset tests show that in-distribution accuracy is inflated by source leakage — the paper reports that rather than the headline figure alone. Accepted at ISAS 2026.",
+  img: fakeNewsImg,
+  href: "https://github.com/Mopheshi/fakenews-lite",
+  stores: [
+    {
+      kind: "github",
+      href: "https://github.com/Mopheshi/fakenews-lite",
+      label: "GitHub",
+    },
+  ],
+};
 
 const vancus: Project = {
   date: "2026 — Present",
@@ -94,9 +179,9 @@ const vaultsplit: Project = {
 };
 
 const acm: Project = {
-  date: "2026 — Accepted",
+  date: "2026 — Published",
   title: "Adaptive Circular Manifold (ACM)",
-  body: "First-author research introducing a density-dependent geometric metric for robust gradient descent. Accepted at the 8th International Congress on HCI, Optimisation and Robotic Applications.",
+  body: "First-author research introducing a density-dependent Riemannian metric for robust gradient descent, analysed for algorithmic stability, convergence and generalisation. Published at IEEE ICHORA 2026, the 8th International Congress on HCI, Optimisation and Robotic Applications.",
   img: acmImg,
   href: "https://github.com/Mopheshi/ACM-Optimiser",
   stores: [
@@ -124,9 +209,9 @@ const personaRag: Project = {
 };
 
 const expertSystem: Project = {
-  date: "2026 — Accepted",
+  date: "2026 — Published",
   title: "Expert System for Medical Diagnosis",
-  body: "First-author expert system combining an LLM front-end with rule-based logic engines for medical diagnosis from natural language.",
+  body: "First-author neuro-symbolic system that couples an LLM front-end to a DAG-structured rule engine, so diagnosis from natural language is auditable rather than opaque. Published at IEEE ICHORA 2026.",
   img: expertSystemImg,
   href: "https://github.com/Mopheshi/ExpertSystemforMedDiag",
   stores: [
@@ -239,10 +324,12 @@ export const projects: Project[] = [vancus, vaultsplit, acm, personaRag];
 
 /** Full project list shown on the dedicated /projects page. */
 export const allProjects: Project[] = [
+  teleoperation,
   vancus,
   vaultsplit,
   acm,
   personaRag,
+  fakeNewsLite,
   expertSystem,
   incase,
   paysphere,
@@ -255,37 +342,10 @@ export const allProjects: Project[] = [
 const HORA =
   "8th International Congress on Human-Computer Interaction, Optimization and Robotic Applications";
 const ASYU = "Innovations in Intelligent Systems and Applications Conference";
+const ISAS =
+  "International Symposium on Innovative Approaches in Smart Technologies";
 
 export const publications: Publication[] = [
-  // {
-  //   title:
-  //     "PersonaRAG: An Agentic LLM Framework for Behavioural User Modelling and Contextual Recommendation",
-  //   authors: "N. M. Edward",
-  //   venue: ASYU,
-  //   year: 2026,
-  //   status: "Submitted",
-  //   href: "https://github.com/Mopheshi/bcthack",
-  // },
-  {
-    title:
-      "A Reproducible Benchmark of U-Net Variants for Multimodal Brain Tumour Segmentation on BraTS 2020 Comparative Evaluation and Modality Ablation",
-    authors:
-      "L. A. Obadiah, N. M. Abubakar, D. Godwin, N. M. Edward, G. Nyibong, J. Daniel",
-    venue: ASYU,
-    year: 2026,
-    status: "Accepted",
-    // href: "",
-    publisher: "IEEE",
-  },
-  // {
-  //   title:
-  //     "Lightweight Machine Learning Models for Fake News Detection: An Ensemble Approach with Part-of-Speech Features",
-  //   authors:
-  //     "N. M. Edward, L. A. Obadiah, J. Daniel, N. M. Abubakar, D. Godwin, C. Ishaya, G. Nyibong, Y. G. Bello",
-  //   venue: ASYU,
-  //   year: 2026,
-  //   status: "Submitted",
-  // },
   {
     title:
       "Adaptive Circular Manifold (ACM): A Density-Dependent Geometric Metric for Robust Gradient Descent",
@@ -293,7 +353,7 @@ export const publications: Publication[] = [
     venue: HORA,
     year: 2026,
     status: "Published",
-    href: "https://ieeexplore.ieee.org/document/11537092",
+    href: "https://doi.org/10.1109/ICHORA69329.2026.11537092",
     publisher: "IEEE",
   },
   {
@@ -304,6 +364,17 @@ export const publications: Publication[] = [
     year: 2026,
     status: "Published",
     href: "https://doi.org/10.1109/ICHORA69329.2026.11536979",
+    publisher: "IEEE",
+  },
+  {
+    title:
+      "Bias and Fairness in AI Systems: Theoretical Analysis and Empirical Validation Through Reweighing Mitigation",
+    authors:
+      "L. A. Obadiah, D. Godwin, N. M. Edward, N. M. Abubakar, J. Daniel, D. K. Titus",
+    venue: HORA,
+    year: 2026,
+    status: "Published",
+    href: "https://doi.org/10.1109/ICHORA69329.2026.11537050",
     publisher: "IEEE",
   },
   {
@@ -320,8 +391,7 @@ export const publications: Publication[] = [
   {
     title:
       "Credit Card Fraud Detection: Addressing Class Imbalance with Machine Learning",
-    authors:
-      "D. Godwin, D. K. Titus, N. M. Edward, N. M. Abubakar, C. Ishaya",
+    authors: "D. Godwin, D. K. Titus, N. M. Edward, N. M. Abubakar, C. Ishaya",
     venue: HORA,
     year: 2026,
     status: "Published",
@@ -330,14 +400,24 @@ export const publications: Publication[] = [
   },
   {
     title:
-      "Bias and Fairness in AI Systems: Theoretical Analysis and Empirical Validation Through Reweighing Mitigation",
+      "A Reproducible Benchmark of U-Net Variants for Multimodal Brain Tumour Segmentation on BraTS 2020: Comparative Evaluation and Modality Ablation",
     authors:
-      "L. A. Obadiah, D. Godwin, N. M. Edward, N. M. Abubakar, J. Daniel, D. K. Titus",
-    venue: HORA,
+      "L. A. Obadiah, N. M. Abubakar, D. Godwin, N. M. Edward, G. Nyibong, J. Daniel",
+    venue: ASYU,
     year: 2026,
-    status: "Published",
-    href: "https://doi.org/10.1109/ICHORA69329.2026.11537050",
+    status: "Accepted",
     publisher: "IEEE",
+  },
+  {
+    // No DOI yet — the GitHub repository is linked from the Projects page
+    // instead, so the "See publication" affordance never points at code.
+    title:
+      "Lightweight Ensemble Fake News Detection on Commodity CPUs: A Measured Comparison of Cost and Accuracy",
+    authors:
+      "N. M. Edward, L. A. Obadiah, J. Daniel, N. M. Abubakar, C. Ishaya, D. Godwin, Y. G. Bello, N. George",
+    venue: ISAS,
+    year: 2026,
+    status: "Accepted",
   },
 ];
 
@@ -366,10 +446,186 @@ export const experiences = [
     location: "FCT, Nigeria",
     body: "Independent studio I run on the side — shipping mobile and web products end-to-end for clients and personal bets, from first sketch to App Store and Play Store delivery.",
   },
+  {
+    range: "Mar. 2024 — Jan. 2025",
+    role: "Youth Service (NYSC), Ikeja Electric PLC",
+    location: "Lagos, Nigeria",
+    body: "Built IE Service Monitor, an internal tool for reporting and tracking electricity-downtime incidents across the distribution network.",
+  },
+  {
+    range: "Aug. 2021 — Jul. 2022",
+    role: "Software Engineering Intern, National Population Commission",
+    location: "Nigeria",
+    body: "Statistical analysis in SPSS and STATA; served as a CAPI facilitator for the 2022 Trial Census.",
+  },
 ];
 
 export const favouriteTracks = [
   "2oitlpDllAtMHSJXP7pur6",
   "0ERnYArznxdTBEIj1VSta8",
   "4TknSiotwLHHvAzMI2BjAs",
+];
+
+/**
+ * Lead research statement, taken from the CV. Shown on the home research
+ * section and at the head of the /research page.
+ */
+export const researchInterests =
+  "Trustworthy shared autonomy for human–robot teleoperation: constraint-aware control that keeps people safe without taking the operator out of charge, and robot behaviour that can be specified and reasoned about rather than merely measured.";
+
+/** Short strands used as scannable chips beneath the research statement. */
+export const researchStrands: string[] = [
+  "Shared autonomy",
+  "Human–robot teleoperation",
+  "Constraint-aware control",
+  "Motion retargeting",
+  "Learning from demonstration",
+  "Neuro-symbolic reasoning",
+];
+
+export const research: Research = {
+  title: "IMU-Based Arm Teleoperation of a Unitree G1 Humanoid",
+  kind: "M.Sc. thesis",
+  period: "2024 — Present",
+  stage: "Simulation stage",
+  supervisor: "Assist. Prof. Sina Alp",
+  institution: "İstanbul Okan University",
+  summary:
+    "A real-time pipeline that maps an operator's arm, measured by five wearable IMUs over BLE, onto a simulated Unitree G1 in Unity 6 at 30 Hz. Python handles calibration, kinematics and the safety layer; Unity only renders the joint targets. The design goal throughout is that the operator stays in charge while the constraints stay enforceable — and that every claim is measured rather than asserted.",
+  videoId: DEMO_VIDEO_ID,
+  videoHref: `https://drive.google.com/file/d/${DEMO_VIDEO_ID}/view?usp=sharing`,
+  /** Matches the recording, so the poster frame is never cropped. */
+  videoAspectRatio: "1600 / 748",
+  videoCaption:
+    "Simulation demo — operator arm motion retargeted onto the Unitree G1 in Unity 6.",
+  metrics: [
+    {
+      value: "1.8°",
+      label: "median arm-direction error",
+      detail: "against 74° for a single-pose baseline",
+    },
+    {
+      value: "10 ms",
+      label: "inverse-kinematics solve",
+      detail: "regularised least squares, 4 constraints for 4 joints",
+    },
+    {
+      value: "30 Hz",
+      label: "end-to-end control rate",
+      detail: "five BLE IMUs → Python → Unity 6",
+    },
+    {
+      value: "7%",
+      label: "blocked frames",
+      detail: "down from 40% on recorded operator data",
+    },
+  ],
+  pillars: [
+    {
+      title: "Calibration",
+      body: "A three-pose procedure that cancels each sensor's unknown mounting and heading offset, with handedness measured rather than inferred. Median arm-direction error of 1.8° on simulated sensors, against 74° for a single-pose baseline; forward and side poses land within 3° of azimuth in live validation on a human operator.",
+    },
+    {
+      title: "Retargeting",
+      body: "Direction-matching inverse kinematics on the G1 URDF — upper-arm and forearm directions, four constraints for four joints — solved by regularised least squares in about 10 ms. An elbow-dependent prior resolves the shoulder-yaw redundancy near full extension, and replay tests show no solution drift.",
+    },
+    {
+      title: "Safety layer",
+      body: "Joint-limit, velocity (90°/s), stale-sensor, glitch and self-collision checks with a 3 mm margin, holding the last safe pose on any failure. Blocked frames fall from 40% to 7% on recorded operator data, so the constraint layer protects the robot without stalling the operator.",
+    },
+  ],
+  next: "Heading-drift correction during large movements, then transfer to the physical robot through ROS 2.",
+  stack: [
+    "Python",
+    "NumPy",
+    "SciPy",
+    "PyBullet",
+    "Unity 6",
+    "URDF",
+    "BLE (bleak)",
+    "UDP",
+    "ROS 2 (next)",
+  ],
+};
+
+export const education: Education[] = [
+  {
+    range: "Oct. 2025 — expected 2027",
+    degree: "M.Sc. Artificial Intelligence Engineering (with Thesis)",
+    institution: "İstanbul Okan University",
+    location: "İstanbul, Türkiye",
+    grade: "CGPA 3.86 / 4.00 (96.73%)",
+    thesis:
+      "In progress — IMU-based teleoperation of a humanoid robot arm, supervised by Assist. Prof. Sina Alp.",
+    coursework:
+      "Deep Learning · Advanced Machine Learning · Natural Language Processing · Design of AI Systems · Decision Making and Robotics · AI Engineering",
+  },
+  {
+    range: "Oct. 2017 — Jan. 2024",
+    degree: "B.Tech. (Hons.) Computer Science",
+    institution: "Modibbo Adama University",
+    location: "Yola, Nigeria",
+    grade: "CGPA 4.54 / 5.00 (90.8%)",
+    honours: "First Class Honours — ranked 1st of 99",
+    thesis:
+      "Həba Mobile Dictionary — a digital lexicon for a low-resource Nigerian language.",
+    coursework:
+      "Linear Algebra · Calculus · Statistics for Engineering and Physical Sciences · Computer Programming · Data Structures & Algorithms · AI & Expert Systems",
+  },
+];
+
+export const skillGroups: SkillGroup[] = [
+  {
+    heading: "Robotics",
+    items:
+      "Forward and inverse kinematics; IMU orientation and quaternion maths, sensor calibration; motion retargeting; self-collision checking; robot learning from demonstration (LfD).",
+  },
+  {
+    heading: "Methods",
+    items:
+      "Statistical and deep learning; nonlinear least squares; Riemannian and gradient-based optimisation; probabilistic modelling; explainable AI (SHAP); RAG and LLM agents; neuro-symbolic rule engines.",
+  },
+  {
+    heading: "Languages",
+    items: "Python, C#, Java, Dart.",
+  },
+  {
+    heading: "Tools",
+    items:
+      "PyBullet, Unity 6 (ArticulationBody, URDF import), URDF, BLE (bleak), UDP; PyTorch, TensorFlow / Keras, Scikit-Learn, Hugging Face Transformers, NumPy, SciPy, Pandas.",
+  },
+];
+
+export const awards: Award[] = [
+  {
+    year: "2025",
+    title: "Fully-Funded Postgraduate Scholarship",
+    detail: "Adamawa State Government, Nigeria.",
+  },
+  {
+    year: "2024",
+    title: "Best Graduating Student, Department of Computer Science",
+    detail: "Modibbo Adama University — 1st of 99.",
+  },
+  {
+    year: "2024",
+    title: "Academic Excellence Award",
+    detail: "Həba Development Association, Abuja.",
+  },
+  {
+    year: "2021 — 2023",
+    title: "Undergraduate Scholarships",
+    detail:
+      "Federal Scholarship Board of Nigeria (2023) and Adamawa State Government (2021, 2022).",
+  },
+  {
+    year: "2024 — 2025",
+    title: "Instructor, DigiMinds Foundation",
+    detail: "Taught Flutter and Dart to pre-university students.",
+  },
+  {
+    year: "Memberships",
+    title: "IEEE (since 2026)",
+    detail: "NACOS and NASS (2017 — 2023).",
+  },
 ];

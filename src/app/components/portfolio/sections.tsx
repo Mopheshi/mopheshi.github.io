@@ -373,7 +373,7 @@ export function Hero() {
 
         <div className="mt-8 flex flex-wrap gap-3">
           <HoverFill
-            href="https://1drv.ms/b/c/6249ab7e47a4e210/IQCRjgUjmvSwRZpaPcRqCROsAcDZHqrNydQmCnueagLhbhs?e=FIEgsz"
+            href="https://1drv.ms/b/c/6249ab7e47a4e210/IQCnmy-34jfDR4ciQhC4TJiQAco2xpzD5y-zxEWpM1HYcyQ?e=qNTPTx"
             external
             ariaLabel="Curriculum vitae"
             className="px-6 sm:px-8 py-3 border-2"

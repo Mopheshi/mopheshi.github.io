@@ -4,6 +4,7 @@ import {
   Linkedin,
   ArrowRight,
   ArrowLeft,
+  FileText,
   Menu,
   X,
 } from "lucide-react";
@@ -15,7 +16,6 @@ import {
   projects,
   experiences,
   favouriteTracks,
-  research,
   type Project,
   type Publication,
 } from "./data";
@@ -24,6 +24,10 @@ import workspaceImg from "../../../imports/workspace.webp";
 
 const navy = "var(--p-navy)";
 const gold = "var(--p-gold)";
+
+/** Hosted CV. Linked from the nav on both breakpoints. */
+const CV_URL =
+  "https://1drv.ms/b/c/6249ab7e47a4e210/IQCnmy-34jfDR4ciQhC4TJiQAco2xpzD5y-zxEWpM1HYcyQ?e=qNTPTx";
 
 declare global {
   interface Window {
@@ -217,24 +221,41 @@ export function Nav() {
           ))}
         </ul>
 
-        <a
-          href="https://github.com/Mopheshi"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub profile"
-          className="ml-auto hidden md:inline-flex group relative items-center justify-center w-10 h-10 transition-colors duration-300 hover:text-[var(--p-gold)]"
-          style={{ color: navy }}
-        >
-          <span
-            aria-hidden
-            className="absolute inset-0 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300 ease-out"
-            style={{ backgroundColor: "var(--p-gold-soft)", opacity: 0.35 }}
-          />
-          <Github
-            size={26}
-            className="relative z-10 transition-transform duration-300 ease-out group-hover:-rotate-12 group-hover:scale-110"
-          />
-        </a>
+        <div className="ml-auto hidden md:flex items-center gap-4">
+          <HoverFill
+            href={CV_URL}
+            external
+            ariaLabel="Curriculum vitae"
+            className="px-4 py-1.5 border-2"
+            style={{
+              borderColor: "var(--p-navy)",
+              color: "var(--p-navy)",
+              backgroundColor: "var(--p-cream-soft)",
+              fontWeight: 600,
+            }}
+          >
+            CV
+          </HoverFill>
+
+          <a
+            href="https://github.com/Mopheshi"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
+            className="group relative inline-flex items-center justify-center w-10 h-10 transition-colors duration-300 hover:text-[var(--p-gold)]"
+            style={{ color: navy }}
+          >
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300 ease-out"
+              style={{ backgroundColor: "var(--p-gold-soft)", opacity: 0.35 }}
+            />
+            <Github
+              size={26}
+              className="relative z-10 transition-transform duration-300 ease-out group-hover:-rotate-12 group-hover:scale-110"
+            />
+          </a>
+        </div>
 
         <button
           type="button"
@@ -274,6 +295,19 @@ export function Nav() {
             </li>
           ))}
           <li className="pt-2">
+            <a
+              href={CV_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={close}
+              className="inline-flex items-center gap-2 py-2 transition-colors duration-200 hover:text-[var(--p-gold)]"
+              style={{ color: navy, fontWeight: 600 }}
+            >
+              <FileText size={20} />
+              <span>CV</span>
+            </a>
+          </li>
+          <li>
             <a
               href="https://github.com/Mopheshi"
               target="_blank"
@@ -371,36 +405,7 @@ export function Hero() {
           based in İstanbul, Türkiye.
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          <HoverFill
-            href="https://1drv.ms/b/c/6249ab7e47a4e210/IQCnmy-34jfDR4ciQhC4TJiQAco2xpzD5y-zxEWpM1HYcyQ?e=qNTPTx"
-            external
-            ariaLabel="Curriculum vitae"
-            className="px-6 sm:px-8 py-3 border-2"
-            style={{
-              borderColor: "var(--p-navy)",
-              color: "var(--p-navy)",
-              backgroundColor: "var(--p-cream-soft)",
-            }}
-          >
-            CV
-          </HoverFill>
-          <HoverFill
-            href={research.videoHref}
-            external
-            ariaLabel="Watch the teleoperation simulation demo"
-            className="px-6 sm:px-8 py-3 border-2"
-            style={{
-              borderColor: "var(--p-navy)",
-              color: "var(--p-cream-soft)",
-              backgroundColor: "var(--p-navy)",
-            }}
-          >
-            Watch teleoperation demo
-          </HoverFill>
-        </div>
-
-        <p style={{ color: navy }} className="mt-6 max-w-md">
+        <p style={{ color: navy }} className="mt-8 max-w-md">
           <span style={{ fontWeight: 700 }}>Currently:</span> M.Sc. AI
           Engineering at İstanbul Okan University, researching IMU-based
           teleoperation of a Unitree G1 humanoid. Applying for robotics PhD

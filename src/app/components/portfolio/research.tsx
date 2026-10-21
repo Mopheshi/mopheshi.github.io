@@ -208,7 +208,7 @@ export function ResearchDetail() {
       </p>
 
       <dl
-        className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-8 py-8 border-y"
+        className="mt-10 grid grid-cols-2 lg:grid-cols-3 gap-8 py-8 border-y"
         style={{ borderColor: hairline }}
       >
         {research.metrics.map((metric) => (

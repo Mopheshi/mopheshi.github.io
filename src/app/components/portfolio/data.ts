@@ -501,8 +501,13 @@ export const research: Research = {
   metrics: [
     {
       value: "1.8°",
-      label: "median arm-direction error",
+      label: "median arm-direction error, simulated sensors",
       detail: "against 74° for a single-pose baseline",
+    },
+    {
+      value: "3°",
+      label: "azimuth error, live human operator",
+      detail: "forward and side poses, measured in live validation",
     },
     {
       value: "10 ms",

@@ -6,7 +6,7 @@ import paysphereImg from "../../../imports/paysphere.webp";
 export type Store = "play" | "appstore" | "amazon" | "github" | "web";
 
 /** Google Drive file id of the teleoperation simulation demo video. */
-export const DEMO_VIDEO_ID = "17Kym9MnuxIv6Wj_WgTTDskb1mgKoBsQu";
+export const DEMO_VIDEO_ID = "1gkd0jtLjBEWEAALoYgiDGz0pRzOjkYvR";
 
 export type Project = {
   date: string;

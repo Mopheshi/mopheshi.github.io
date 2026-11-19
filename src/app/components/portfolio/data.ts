@@ -426,7 +426,7 @@ export const experiences = [
     range: "Jun. 2026 — Present",
     role: "AI Engineer, SALI",
     location: "Remote — West Bridgford, Nottingham, England",
-    body: "Engineer on DocAI, the document-analysis service at the core of SALI's AI-powered sustainability compliance platform — it validates documents, grades evidence quality, and returns ESG metrics that other services call for analysis. Also work on SaliUN, a United Nations project that uses DocAI to analyse organisational documents and extract sustainability performance metrics and insights against UN SDG frameworks, alongside contributing to other products across the company.",
+    body: "Engineer on the document-analysis service at the core of SALI's AI-powered sustainability compliance platform — it validates documents, grades evidence quality, and returns ESG metrics that other services call for analysis. Also work on a United Nations project that uses our document-analysis service to analyse organisational documents and extract sustainability performance metrics and insights against UN SDG frameworks, alongside contributing to other products across the company.",
   },
   {
     range: "Jan. 2026 — Present",
@@ -471,7 +471,7 @@ export const favouriteTracks = [
  * section and at the head of the /research page.
  */
 export const researchInterests =
-  "Trustworthy shared autonomy for human–robot teleoperation: constraint-aware control that keeps people safe without taking the operator out of charge, and robot behaviour that can be specified and reasoned about rather than merely measured.";
+  "How can uncertainty-aware multimodal perception and adaptive autonomy improve the reliability, safety and transparency of human–robot teleoperation under sensor drift, communication uncertainty and changing operator intent?";
 
 /** Short strands used as scannable chips beneath the research statement. */
 export const researchStrands: string[] = [

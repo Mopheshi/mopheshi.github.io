@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mopheshi.github.io/sitemap.xml
